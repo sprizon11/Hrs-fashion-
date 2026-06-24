@@ -37,8 +37,13 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+const fallback: WishlistContextValue = {
+  items: [],
+  toggleWishlist: () => {},
+  count: 0,
+};
+
 export function useWishlist() {
   const ctx = useContext(WishlistContext);
-  if (!ctx) throw new Error("useWishlist must be used within WishlistProvider");
-  return ctx;
+  return ctx ?? fallback;
 }
