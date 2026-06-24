@@ -113,3 +113,9 @@ id = "iRkvvcRcuglFElxIkS312"
 uri = "file://hrs-fashion-website.tar.gz"
 type = "unspecified"
 title = "HRS Fashion Website"
+
+[[outputs]]
+id = "sdvzYQrehISp_WFincp1e"
+uri = "file://hrs-fashion.tar.gz"
+type = "unspecified"
+title = "HRS Fashion — Full Project"
