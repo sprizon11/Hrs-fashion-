@@ -1,0 +1,95 @@
+2026-06-24T05:08:04Z info: Deployment: e60b538c-0779-4438-93a1-3e2612f559e5
+2026-06-24T05:08:04Z info: Build: 312b6a2d-12be-498a-a542-bb31cf054649
+2026-06-24T05:08:05Z info: Running Security Scan
+2026-06-24T05:08:10Z info: Installing packages
+--> pnpm install
+
+Scope: all 9 workspace projects
+
+Lockfile is up to date, resolution step is skipped
+
+
+   ╭─────────────────────────────────────────╮
+   │                                         │
+   │   Update available! 10.26.1 → 11.9.0.   │
+   │   Changelog: https://pnpm.io/v/11.9.0   │
+   │    To update, run: pnpm add -g pnpm     │
+   │                                         │
+   ╰─────────────────────────────────────────╯
+
+
+Already up to date
+
+. preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+
+. preinstall: Done
+
+Done in 3s using pnpm v10.26.1
+
+2026-06-24T05:08:15Z info: Starting Build
+
+> @workspace/api-server@0.0.0 build /home/runner/workspace/artifacts/api-server
+> node ./build.mjs
+
+
+
+  dist/index.mjs                       1.4mb ⚠️
+  dist/pino-worker.mjs               153.4kb
+  dist/pino-file.mjs                 142.1kb
+  dist/pino-pretty.mjs               114.6kb
+  dist/thread-stream-worker.mjs        7.3kb
+  dist/index.mjs.map                   2.1mb
+  dist/pino-worker.mjs.map           256.9kb
+  dist/pino-file.mjs.map             229.0kb
+  dist/pino-pretty.mjs.map           204.0kb
+  dist/thread-stream-worker.mjs.map   12.0kb
+
+⚡ Done in 277ms
+
+
+> @workspace/hrs-fashion@0.0.0 build /home/runner/workspace/artifacts/hrs-fashion
+> vite build --config vite.config.ts
+
+
+vite v7.3.3 building client environment for production...
+
+transforming...
+
+src/components/ui/tooltip.tsx (2:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+
+✓ 2184 modules transformed.
+
+rendering chunks...
+
+computing gzip size...
+
+dist/public/index.html                   1.38 kB │ gzip:   0.54 kB
+
+dist/public/assets/index-BZ9B0f0G.css  115.91 kB │ gzip:  18.53 kB
+dist/public/assets/index-CeQQXEvi.js   519.53 kB │ gzip: 159.30 kB
+✓ built in 4.62s
+
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+Removed all cached metadata files
+
+Removed 28496 files
+
+Removed 485 packages
+
+2026-06-24T05:08:27Z info: Pushing pid1 binary layer...
+2026-06-24T05:08:28Z info: Security Scan Complete
+2026-06-24T05:08:30Z info: Pushing Repl layer...
+2026-06-24T05:08:30Z info: Pushing hosting layer...
+2026-06-24T05:08:38Z info: Created hosting layer
+2026-06-24T05:08:57Z info: Created pid1 binary layer
+2026-06-24T05:09:56Z info: Created Repl layer
+2026-06-24T05:10:04Z info: Pushed image manifest
+2026-06-24T05:10:04Z info: Skipping container streaming artifacts (SOCI/ZTOC) for non-reserved-VM deployment
+2026-06-24T05:10:50Z info: Creating Autoscale service
+2026-06-24T05:11:02Z info: Creating Autoscale service
+2026-06-24T05:11:14Z info: Creating Autoscale service
