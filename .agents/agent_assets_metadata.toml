@@ -1,0 +1,62 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "cFTJDyeae2yEjdRs67wBs"
+uri = "file://artifacts/hrs-fashion/public/images/hero.png"
+type = "image"
+title = "Elegant evening gown hero"
+
+[[generated]]
+id = "NbTGoC9diZT9SGCtaa85F"
+uri = "file://artifacts/hrs-fashion/public/images/banner.png"
+type = "image"
+title = "Soft fabric banner"
+
+[[generated]]
+id = "EnVGaY56u3ONeMUB20bki"
+uri = "file://artifacts/hrs-fashion/public/images/dress1.png"
+type = "image"
+title = "Dusty rose slip dress"
+
+[[generated]]
+id = "qB3OzT9kR9w9kD8naH625"
+uri = "file://artifacts/hrs-fashion/public/images/dress2.png"
+type = "image"
+title = "Cream summer maxi dress"
+
+[[generated]]
+id = "XmxaiJ71G-gCGnO-V_wfY"
+uri = "file://artifacts/hrs-fashion/public/images/dress3.png"
+type = "image"
+title = "Black lace evening gown"
+
+[[generated]]
+id = "ih3UJKKCoJY4xfQoCALmb"
+uri = "file://artifacts/hrs-fashion/public/images/dress4.png"
+type = "image"
+title = "Mauve floral midi dress"
+
+[[generated]]
+id = "9clfk0QyWi5Rej8SpRh-N"
+uri = "file://artifacts/hrs-fashion/public/images/dress5.png"
+type = "image"
+title = "Blush pink formal dress"
+
+[[generated]]
+id = "vyKD68xlTGPHfPKBVxrpq"
+uri = "file://artifacts/hrs-fashion/public/images/dress6.png"
+type = "image"
+title = "Champagne wrap dress"
+
+[[generated]]
+id = "Cy8Qc7E7JvYHng_w5p0H-"
+uri = "file://artifacts/hrs-fashion/public/images/dress7.png"
+type = "image"
+title = "Emerald green silk dress"
+
+[[generated]]
+id = "IGn7x_p5WloEcRbeZapqb"
+uri = "file://artifacts/hrs-fashion/public/images/dress8.png"
+type = "image"
+title = "White lace gown"
