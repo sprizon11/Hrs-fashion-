@@ -2,7 +2,8 @@ export interface Product {
   id: string;
   name: string;
   price: number;
-  category: "Evening" | "Casual" | "Formal" | "Summer" | "Bridal";
+  originalPrice?: number;
+  category: "Evening" | "Casual" | "Formal" | "Summer" | "Bridal" | "Bags" | "Accessories";
   image: string;
   images?: string[];
   isNew?: boolean;
@@ -16,6 +17,7 @@ export const products: Product[] = [
     id: "1",
     name: "Aura Silk Slip Dress",
     price: 350,
+    originalPrice: 450,
     category: "Evening",
     image: "/images/dress1.png",
     images: ["/images/dress1.png", "/images/dress6.png"],
@@ -74,6 +76,7 @@ export const products: Product[] = [
     id: "4",
     name: "Rosalind Floral Midi",
     price: 220,
+    originalPrice: 280,
     category: "Casual",
     image: "/images/dress4.png",
     images: ["/images/dress4.png", "/images/dress2.png"],
@@ -113,6 +116,7 @@ export const products: Product[] = [
     id: "6",
     name: "Champagne Wrap Dress",
     price: 310,
+    originalPrice: 390,
     category: "Evening",
     image: "/images/dress6.png",
     images: ["/images/dress6.png", "/images/dress1.png"],
@@ -166,4 +170,87 @@ export const products: Product[] = [
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
   },
+  {
+    id: "b1",
+    name: "Rosette Mini Bag",
+    price: 195,
+    category: "Bags",
+    image: "/images/bag1.png",
+    description: "Bridal and soft rose mini handbag with a delicate gold chain. Perfect for elegant evenings.",
+    details: ["Soft rose leather", "Gold chain strap", "Magnetic clasp", "Compact interior", "Made in Italy"],
+    sizes: ["One Size"]
+  },
+  {
+    id: "b2",
+    name: "Pearl Handle Clutch",
+    price: 165,
+    category: "Bags",
+    image: "/images/bag2.png",
+    description: "Ivory satin clutch featuring a stunning pearl detail handle for a touch of timeless sophistication.",
+    details: ["Ivory satin exterior", "Faux pearl handle", "Secure snap closure", "Silver-tone hardware", "Dust bag included"],
+    sizes: ["One Size"]
+  },
+  {
+    id: "b3",
+    name: "Champagne Tote",
+    price: 285,
+    originalPrice: 350,
+    category: "Bags",
+    image: "/images/bag3.png",
+    description: "A large structured champagne-colored leather tote. Spacious enough for your essentials while remaining incredibly chic.",
+    details: ["Structured leather", "Champagne finish", "Spacious interior compartment", "Top handle design", "Protective feet on base"],
+    sizes: ["One Size"]
+  },
+  {
+    id: "b4",
+    name: "Velvet Evening Bag",
+    price: 220,
+    category: "Bags",
+    image: "/images/bag4.png",
+    description: "Deep blush velvet evening bag accented with a brilliant gold clasp. The perfect finishing touch.",
+    details: ["Deep blush velvet", "Gold-tone hardware", "Chain crossbody option", "Satin lined", "Imported"],
+    sizes: ["One Size"]
+  },
+  {
+    id: "b5",
+    name: "Blush Quilted Shoulder",
+    price: 340,
+    originalPrice: 420,
+    category: "Bags",
+    image: "/images/bag5.png",
+    description: "A classic reborn. Blush pink quilted leather shoulder bag offering elegance and versatility.",
+    details: ["Quilted leather", "Adjustable shoulder strap", "Multiple compartments", "Turn-lock closure", "Hand finished"],
+    sizes: ["One Size"]
+  },
+  {
+    id: "b6",
+    name: "Ivory Crossbody",
+    price: 175,
+    category: "Bags",
+    image: "/images/bag6.png",
+    description: "Minimalist ivory leather crossbody paired with gleaming gold hardware. Effortless daily luxury.",
+    details: ["Smooth ivory leather", "Gold hardware accents", "Adjustable strap", "Zip closure", "Minimalist profile"],
+    sizes: ["One Size"]
+  },
+  {
+    id: "b7",
+    name: "Rose Gold Chain Bag",
+    price: 255,
+    category: "Bags",
+    image: "/images/bag7.png",
+    description: "A rose gold chain-strap mini bag with a high-shine luxe finish to elevate any outfit.",
+    details: ["Luxe metallic finish", "Rose gold tone", "Chain strap", "Evening essential", "Wipe clean"],
+    sizes: ["One Size"]
+  },
+  {
+    id: "b8",
+    name: "Silk Bow Pouch",
+    price: 135,
+    originalPrice: 180,
+    category: "Bags",
+    image: "/images/bag8.png",
+    description: "A beautiful cream silk evening pouch gathered with a soft ribbon bow.",
+    details: ["100% Silk", "Ribbon bow detail", "Drawstring closure", "Delicate hand feel", "Special occasion piece"],
+    sizes: ["One Size"]
+  }
 ];

@@ -1,15 +1,18 @@
 import { Link, useLocation } from "wouter";
-import { ShoppingBag, Menu, X, Instagram, Facebook, Twitter } from "lucide-react";
+import { ShoppingBag, Menu, X, Instagram, Facebook, Twitter, Heart, Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/lib/cart-context";
+import { useWishlist } from "@/lib/wishlist-context";
 import { CartDrawer } from "@/components/cart-drawer";
+import { NewsletterPopup } from "@/components/newsletter-popup";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { totalCount, openCart } = useCart();
+  const { count: wishlistCount } = useWishlist();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -24,13 +27,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
       document.body.style.overflow = "";
     }
     return () => { document.body.style.overflow = ""; };
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen, location]);
 
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Collections", path: "/collections" },
+    { name: "Lookbook", path: "/lookbook" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
+    { name: "Sale", path: "/sale", special: true },
   ];
 
   const isHome = location === "/";
@@ -55,21 +60,40 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 key={link.path}
                 href={link.path}
                 className={`text-xs uppercase tracking-widest font-medium transition-colors duration-300 relative group ${
-                  location === link.path
+                  link.special 
+                    ? "text-red-500 hover:text-red-600" 
+                    : location === link.path
                     ? "text-primary"
                     : isScrolled || !isHome
                     ? "text-foreground/70 hover:text-primary"
                     : "text-white/80 hover:text-white"
                 }`}
-                data-testid={`link-nav-${link.name.toLowerCase()}`}
               >
                 {link.name}
-                <span className={`absolute -bottom-1 left-0 w-full h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ${location === link.path ? "scale-x-100" : ""}`} />
+                <span className={`absolute -bottom-1 left-0 w-full h-px ${link.special ? "bg-red-500" : "bg-primary"} scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ${location === link.path ? "scale-x-100" : ""}`} />
               </Link>
             ))}
           </nav>
 
           <div className="flex items-center gap-3">
+            <Link href="/search" className={`relative p-2.5 transition-colors duration-300 ${isScrolled || !isHome ? "text-foreground hover:text-primary" : "text-white hover:text-white/70"}`}>
+              <Search className="w-5 h-5" />
+            </Link>
+            <Link href="/wishlist" className={`hidden md:block relative p-2.5 transition-colors duration-300 ${isScrolled || !isHome ? "text-foreground hover:text-primary" : "text-white hover:text-white/70"}`}>
+              <Heart className="w-5 h-5" />
+              <AnimatePresence>
+                {wishlistCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-primary text-white text-[10px] rounded-full flex items-center justify-center font-semibold"
+                  >
+                    {wishlistCount}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </Link>
             <button
               onClick={openCart}
               className={`relative p-2.5 transition-colors duration-300 ${isScrolled || !isHome ? "text-foreground hover:text-primary" : "text-white hover:text-white/70"}`}
@@ -111,7 +135,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             className="fixed inset-0 z-40 bg-background flex flex-col pt-28 px-8 md:hidden"
           >
             <nav className="flex flex-col gap-0">
-              {navLinks.map((link, i) => (
+              {[...navLinks, {name: "Wishlist", path: "/wishlist"}].map((link, i) => (
                 <motion.div
                   key={link.path}
                   initial={{ opacity: 0, x: -20 }}
@@ -122,9 +146,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     href={link.path}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block font-serif text-3xl py-5 border-b border-border/50 ${
-                      location === link.path ? "text-primary" : "text-foreground"
+                      link.special ? "text-red-500" : location === link.path ? "text-primary" : "text-foreground"
                     }`}
-                    data-testid={`link-mobile-${link.name.toLowerCase()}`}
                   >
                     {link.name}
                   </Link>
@@ -145,13 +168,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
               Curated elegance for the modern woman. Timeless, feminine style designed to make you feel beautiful and confident.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="w-9 h-9 rounded-full bg-background border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" data-testid="link-instagram">
+              <a href="#" className="w-9 h-9 rounded-full bg-background border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
                 <Instagram className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-background border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" data-testid="link-facebook">
+              <a href="#" className="w-9 h-9 rounded-full bg-background border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
                 <Facebook className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-background border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors" data-testid="link-twitter">
+              <a href="#" className="w-9 h-9 rounded-full bg-background border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors">
                 <Twitter className="w-4 h-4" />
               </a>
             </div>
@@ -160,10 +183,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <h4 className="text-xs font-semibold mb-6 uppercase tracking-widest text-foreground">Shop</h4>
             <ul className="space-y-3.5 text-sm text-muted-foreground">
               <li><Link href="/collections" className="hover:text-primary transition-colors">All Collections</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">New Arrivals</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Evening Wear</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Bridal Edit</Link></li>
-              <li><Link href="/collections" className="hover:text-primary transition-colors">Summer Dresses</Link></li>
+              <li><Link href="/lookbook" className="hover:text-primary transition-colors">Lookbook</Link></li>
+              <li><Link href="/sale" className="hover:text-primary transition-colors text-red-500">Sale</Link></li>
+              <li><Link href="/wishlist" className="hover:text-primary transition-colors">Wishlist</Link></li>
             </ul>
           </div>
           <div>
@@ -186,14 +208,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 type="email"
                 placeholder="Your email"
                 className="flex-1 bg-transparent px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground outline-none"
-                data-testid="input-footer-email"
               />
-              <button className="px-4 py-3 bg-primary text-white text-xs uppercase tracking-widest hover:bg-primary/90 transition-colors shrink-0" data-testid="button-footer-subscribe">
+              <button className="px-4 py-3 bg-primary text-white text-xs uppercase tracking-widest hover:bg-primary/90 transition-colors shrink-0">
                 Join
               </button>
             </div>
           </div>
         </div>
+        
+        {/* Secure Payment */}
+        <div className="container mx-auto px-8 mb-8 flex gap-3 opacity-60">
+           <span className="text-[10px] border border-border px-2 py-1 uppercase tracking-widest">Visa</span>
+           <span className="text-[10px] border border-border px-2 py-1 uppercase tracking-widest">Mastercard</span>
+           <span className="text-[10px] border border-border px-2 py-1 uppercase tracking-widest">PayPal</span>
+        </div>
+
         <div className="container mx-auto px-8 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-muted-foreground">
           <p>&copy; {new Date().getFullYear()} HRS Fashion. All rights reserved.</p>
           <div className="flex gap-6">
@@ -204,6 +233,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </footer>
 
       <CartDrawer />
+      <NewsletterPopup />
     </div>
   );
 }

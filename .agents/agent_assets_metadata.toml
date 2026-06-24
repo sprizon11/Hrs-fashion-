@@ -60,6 +60,54 @@ uri = "file://artifacts/hrs-fashion/public/images/dress8.png"
 type = "image"
 title = "White lace gown"
 
+[[generated]]
+id = "O411xn5M2VSYbjDPhwbBm"
+uri = "file://artifacts/hrs-fashion/public/images/bag1.png"
+type = "image"
+title = "Soft rose mini handbag"
+
+[[generated]]
+id = "aq9xR4YEF578mgFKOwu9J"
+uri = "file://artifacts/hrs-fashion/public/images/bag2.png"
+type = "image"
+title = "Ivory satin clutch"
+
+[[generated]]
+id = "GsLOa_sT5GoZy0Tubg9Z1"
+uri = "file://artifacts/hrs-fashion/public/images/bag3.png"
+type = "image"
+title = "Champagne leather tote"
+
+[[generated]]
+id = "LCxMs88elSeG56rdw3ISl"
+uri = "file://artifacts/hrs-fashion/public/images/bag4.png"
+type = "image"
+title = "Blush velvet evening bag"
+
+[[generated]]
+id = "ueAJ_UPJ-CAoQzjjXKccR"
+uri = "file://artifacts/hrs-fashion/public/images/bag5.png"
+type = "image"
+title = "Blush quilted shoulder bag"
+
+[[generated]]
+id = "akzOBisFcVOgdpievLpbB"
+uri = "file://artifacts/hrs-fashion/public/images/bag6.png"
+type = "image"
+title = "Ivory crossbody bag"
+
+[[generated]]
+id = "IRgM5uRaGzvsiPR6uDOou"
+uri = "file://artifacts/hrs-fashion/public/images/bag7.png"
+type = "image"
+title = "Rose gold chain bag"
+
+[[generated]]
+id = "S8Hb_C_xbt8dUGpk9tvIO"
+uri = "file://artifacts/hrs-fashion/public/images/bag8.png"
+type = "image"
+title = "Cream silk pouch"
+
 [[outputs]]
 id = "iRkvvcRcuglFElxIkS312"
 uri = "file://hrs-fashion-website.tar.gz"

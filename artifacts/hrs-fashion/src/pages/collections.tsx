@@ -4,7 +4,7 @@ import { products } from "@/lib/data";
 import { Heart } from "lucide-react";
 import { Link } from "wouter";
 
-const categories = ["All", "Evening", "Casual", "Formal", "Summer", "Bridal"];
+const categories = ["All", "Evening", "Casual", "Formal", "Summer", "Bridal", "Bags"];
 
 export default function Collections() {
   const [activeCategory, setActiveCategory] = useState("All");
