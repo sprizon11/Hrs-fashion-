@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import Collections from "@/pages/collections";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
+import { CartProvider } from "@/lib/cart-context";
 
 const queryClient = new QueryClient();
 
@@ -29,10 +30,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
+        <CartProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </CartProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
