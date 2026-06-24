@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "cFTJDyeae2yEjdRs67wBs"
@@ -60,3 +59,9 @@ id = "IGn7x_p5WloEcRbeZapqb"
 uri = "file://artifacts/hrs-fashion/public/images/dress8.png"
 type = "image"
 title = "White lace gown"
+
+[[outputs]]
+id = "iRkvvcRcuglFElxIkS312"
+uri = "file://hrs-fashion-website.tar.gz"
+type = "unspecified"
+title = "HRS Fashion Website"
