@@ -3,13 +3,14 @@ import type { Product } from "@/lib/data";
 
 export interface CartItem extends Product {
   quantity: number;
+  selectedSize: string;
 }
 
 interface CartContextValue {
   items: CartItem[];
-  addItem: (product: Product) => void;
-  removeItem: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
+  addItem: (product: Product, size: string) => void;
+  removeItem: (id: string, size: string) => void;
+  updateQuantity: (id: string, size: string, quantity: number) => void;
   clearCart: () => void;
   totalCount: number;
   totalPrice: number;
@@ -24,29 +25,33 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const addItem = useCallback((product: Product) => {
+  const addItem = useCallback((product: Product, size: string) => {
     setItems((prev) => {
-      const existing = prev.find((i) => i.id === product.id);
+      const existing = prev.find((i) => i.id === product.id && i.selectedSize === size);
       if (existing) {
         return prev.map((i) =>
-          i.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.id === product.id && i.selectedSize === size
+            ? { ...i, quantity: i.quantity + 1 }
+            : i
         );
       }
-      return [...prev, { ...product, quantity: 1 }];
+      return [...prev, { ...product, quantity: 1, selectedSize: size }];
     });
     setIsOpen(true);
   }, []);
 
-  const removeItem = useCallback((id: string) => {
-    setItems((prev) => prev.filter((i) => i.id !== id));
+  const removeItem = useCallback((id: string, size: string) => {
+    setItems((prev) => prev.filter((i) => !(i.id === id && i.selectedSize === size)));
   }, []);
 
-  const updateQuantity = useCallback((id: string, quantity: number) => {
+  const updateQuantity = useCallback((id: string, size: string, quantity: number) => {
     if (quantity <= 0) {
-      setItems((prev) => prev.filter((i) => i.id !== id));
+      setItems((prev) => prev.filter((i) => !(i.id === id && i.selectedSize === size)));
     } else {
       setItems((prev) =>
-        prev.map((i) => (i.id === id ? { ...i, quantity } : i))
+        prev.map((i) =>
+          i.id === id && i.selectedSize === size ? { ...i, quantity } : i
+        )
       );
     }
   }, []);

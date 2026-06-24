@@ -76,13 +76,13 @@ export function CartDrawer() {
                   <div className="space-y-6">
                     {items.map((item) => (
                       <motion.div
-                        key={item.id}
+                        key={`${item.id}-${item.selectedSize}`}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, x: 40 }}
                         transition={{ duration: 0.25 }}
                         className="flex gap-5 pb-6 border-b border-border last:border-none"
-                        data-testid={`cart-item-${item.id}`}
+                        data-testid={`cart-item-${item.id}-${item.selectedSize}`}
                       >
                         <div className="w-24 h-28 shrink-0 overflow-hidden bg-muted">
                           <img
@@ -95,14 +95,18 @@ export function CartDrawer() {
                           <div>
                             <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">{item.category}</p>
                             <h4 className="font-serif text-base text-foreground leading-snug">{item.name}</h4>
-                            <p className="text-primary font-medium mt-1">${item.price}</p>
+                            <div className="flex items-center gap-2 mt-1">
+                              <p className="text-primary font-medium">${item.price}</p>
+                              <span className="text-muted-foreground text-xs">·</span>
+                              <span className="text-xs text-muted-foreground uppercase tracking-widest">Size {item.selectedSize}</span>
+                            </div>
                           </div>
                           <div className="flex items-center justify-between mt-3">
                             <div className="flex items-center gap-1 border border-border">
                               <button
-                                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                onClick={() => updateQuantity(item.id, item.selectedSize, item.quantity - 1)}
                                 className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-                                data-testid={`button-decrease-${item.id}`}
+                                data-testid={`button-decrease-${item.id}-${item.selectedSize}`}
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
@@ -110,17 +114,17 @@ export function CartDrawer() {
                                 {item.quantity}
                               </span>
                               <button
-                                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                onClick={() => updateQuantity(item.id, item.selectedSize, item.quantity + 1)}
                                 className="w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-                                data-testid={`button-increase-${item.id}`}
+                                data-testid={`button-increase-${item.id}-${item.selectedSize}`}
                               >
                                 <Plus className="w-3 h-3" />
                               </button>
                             </div>
                             <button
-                              onClick={() => removeItem(item.id)}
+                              onClick={() => removeItem(item.id, item.selectedSize)}
                               className="p-1.5 text-muted-foreground hover:text-destructive transition-colors"
-                              data-testid={`button-remove-${item.id}`}
+                              data-testid={`button-remove-${item.id}-${item.selectedSize}`}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>

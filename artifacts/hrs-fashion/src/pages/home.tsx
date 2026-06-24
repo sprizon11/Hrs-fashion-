@@ -2,9 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ShoppingBag, ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 import { products } from "@/lib/data";
-import { useCart } from "@/lib/cart-context";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -39,7 +38,6 @@ const testimonials = [
 
 export default function Home() {
   const featuredProducts = products.slice(0, 4);
-  const { addItem } = useCart();
 
   return (
     <div className="flex flex-col w-full">
@@ -99,7 +97,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll hint */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -107,7 +104,6 @@ export default function Home() {
           className="absolute bottom-10 right-12 z-10 flex flex-col items-center gap-2"
         >
           <div className="w-px h-16 bg-white/40 animate-pulse" />
-          <span className="text-white/50 text-[10px] uppercase tracking-widest rotate-90 origin-center mt-2">Scroll</span>
         </motion.div>
       </section>
 
@@ -119,21 +115,23 @@ export default function Home() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
-              variants={fadeUp}
+              variants={stagger}
             >
-              <p className="text-xs uppercase tracking-[0.25em] text-primary mb-6">Our Philosophy</p>
-              <h2 className="text-4xl md:text-5xl font-serif mb-8 text-foreground leading-tight">
+              <motion.p variants={fadeUp} className="text-xs uppercase tracking-[0.25em] text-primary mb-6">Our Philosophy</motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-serif mb-8 text-foreground leading-tight">
                 The Softness<br />of Luxury
-              </h2>
-              <p className="text-muted-foreground text-base leading-[1.85] mb-8">
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-muted-foreground text-base leading-[1.85] mb-8">
                 HRS Fashion is more than a boutique — it's a feeling. We believe in the power of a perfect fit, the romance of delicate fabrics, and the confidence that comes from wearing something truly special.
-              </p>
-              <p className="text-muted-foreground text-base leading-[1.85] mb-10">
+              </motion.p>
+              <motion.p variants={fadeUp} className="text-muted-foreground text-base leading-[1.85] mb-10">
                 Step into a world of blush tones, gentle drapes, and uncompromising quality. Each piece is curated not for trends, but for the woman who knows her own style.
-              </p>
-              <Link href="/about" className="inline-flex items-center gap-3 text-xs uppercase tracking-widest text-primary hover:gap-5 transition-all duration-300">
-                Discover Our Story <ArrowRight className="w-4 h-4" />
-              </Link>
+              </motion.p>
+              <motion.div variants={fadeUp}>
+                <Link href="/about" className="inline-flex items-center gap-3 text-xs uppercase tracking-widest text-primary hover:gap-5 transition-all duration-300">
+                  Discover Our Story <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.97 }}
@@ -180,33 +178,30 @@ export default function Home() {
           >
             {featuredProducts.map((product) => (
               <motion.div key={product.id} variants={fadeUp} className="group cursor-pointer" data-testid={`card-featured-${product.id}`}>
-                <div className="relative aspect-[3/4] overflow-hidden bg-muted mb-5">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {product.isNew && (
-                    <span className="absolute top-4 left-4 bg-white/95 px-3 py-1 text-[10px] uppercase tracking-widest text-foreground font-medium">
-                      New
-                    </span>
-                  )}
-                  <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-350">
-                    <Button
-                      className="w-full rounded-none bg-white text-foreground hover:bg-primary hover:text-white uppercase tracking-widest text-[11px] h-11"
-                      onClick={() => addItem(product)}
-                      data-testid={`button-featured-cart-${product.id}`}
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5 mr-2" />
-                      Add to Bag
-                    </Button>
+                <Link href={`/product/${product.id}`}>
+                  <div className="relative aspect-[3/4] overflow-hidden bg-muted mb-5">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+                    />
+                    {product.isNew && (
+                      <span className="absolute top-4 left-4 bg-white/95 px-3 py-1 text-[10px] uppercase tracking-widest text-foreground font-medium">
+                        New
+                      </span>
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="w-full bg-white text-foreground uppercase tracking-widest text-[11px] h-11 flex items-center justify-center font-medium shadow-lg hover:bg-primary hover:text-white transition-colors duration-200">
+                        Select Size
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="text-center">
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1.5">{product.category}</p>
-                  <h3 className="font-serif text-base text-foreground mb-1">{product.name}</h3>
-                  <p className="text-primary font-medium text-sm">${product.price}</p>
-                </div>
+                  <div className="text-center">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1.5">{product.category}</p>
+                    <h3 className="font-serif text-base text-foreground mb-1">{product.name}</h3>
+                    <p className="text-primary font-medium text-sm">${product.price}</p>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </motion.div>

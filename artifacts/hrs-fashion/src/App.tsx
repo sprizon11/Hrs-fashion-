@@ -8,6 +8,7 @@ import Home from "@/pages/home";
 import Collections from "@/pages/collections";
 import About from "@/pages/about";
 import Contact from "@/pages/contact";
+import Product from "@/pages/product";
 import { CartProvider } from "@/lib/cart-context";
 
 const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/collections" component={Collections} />
+        <Route path="/product/:id" component={Product} />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
         <Route component={NotFound} />

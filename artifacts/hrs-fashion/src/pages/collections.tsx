@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { products } from "@/lib/data";
-import { Button } from "@/components/ui/button";
-import { ShoppingBag, Heart } from "lucide-react";
-import { useCart } from "@/lib/cart-context";
+import { Heart } from "lucide-react";
+import { Link } from "wouter";
 
 const categories = ["All", "Evening", "Casual", "Formal", "Summer", "Bridal"];
 
 export default function Collections() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [wishlist, setWishlist] = useState<string[]>([]);
-  const { addItem } = useCart();
 
   const filteredProducts =
     activeCategory === "All"
       ? products
       : products.filter((p) => p.category === activeCategory);
 
-  const toggleWishlist = (id: string) => {
+  const toggleWishlist = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setWishlist((prev) =>
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
@@ -103,60 +103,57 @@ export default function Collections() {
                 className="group flex flex-col"
                 data-testid={`card-product-${product.id}`}
               >
-                <div className="relative aspect-[3/4] overflow-hidden bg-muted mb-5">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
-                  />
-
-                  {/* Badges */}
-                  <div className="absolute top-4 left-4 flex flex-col gap-2">
-                    {product.isNew && (
-                      <span className="bg-white/95 backdrop-blur-sm px-3 py-1 text-[10px] uppercase tracking-widest text-foreground font-medium">
-                        New
-                      </span>
-                    )}
-                    {product.category === "Bridal" && (
-                      <span className="bg-primary/90 text-white px-3 py-1 text-[10px] uppercase tracking-widest font-medium">
-                        Bridal
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Wishlist */}
-                  <button
-                    onClick={() => toggleWishlist(product.id)}
-                    className="absolute top-4 right-4 w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-white"
-                    data-testid={`button-wishlist-${product.id}`}
-                  >
-                    <Heart
-                      className={`w-4 h-4 transition-colors ${wishlist.includes(product.id) ? "fill-primary text-primary" : ""}`}
+                <Link href={`/product/${product.id}`}>
+                  <div className="relative aspect-[3/4] overflow-hidden bg-muted mb-5 cursor-pointer">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
                     />
-                  </button>
 
-                  {/* Add to Cart overlay */}
-                  <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-350">
-                    <Button
-                      className="w-full rounded-none bg-white text-foreground hover:bg-primary hover:text-white uppercase tracking-widest text-xs h-11 shadow-lg"
-                      onClick={() => addItem(product)}
-                      data-testid={`button-add-to-cart-${product.id}`}
+                    {/* Badges */}
+                    <div className="absolute top-4 left-4 flex flex-col gap-2">
+                      {product.isNew && (
+                        <span className="bg-white/95 backdrop-blur-sm px-3 py-1 text-[10px] uppercase tracking-widest text-foreground font-medium">
+                          New
+                        </span>
+                      )}
+                      {product.category === "Bridal" && (
+                        <span className="bg-primary/90 text-white px-3 py-1 text-[10px] uppercase tracking-widest font-medium">
+                          Bridal
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Wishlist */}
+                    <button
+                      onClick={(e) => toggleWishlist(product.id, e)}
+                      className="absolute top-4 right-4 w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-white"
+                      data-testid={`button-wishlist-${product.id}`}
                     >
-                      <ShoppingBag className="w-3.5 h-3.5 mr-2" />
-                      Add to Bag
-                    </Button>
-                  </div>
-                </div>
+                      <Heart
+                        className={`w-4 h-4 transition-colors ${wishlist.includes(product.id) ? "fill-primary text-primary" : ""}`}
+                      />
+                    </button>
 
-                <div className="text-center px-1">
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-2">
-                    {product.category}
-                  </p>
-                  <h3 className="font-serif text-lg text-foreground mb-1.5 leading-tight">
-                    {product.name}
-                  </h3>
-                  <p className="text-primary font-medium">${product.price.toLocaleString()}</p>
-                </div>
+                    {/* View Details overlay */}
+                    <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                      <div className="w-full bg-white text-foreground hover:bg-primary hover:text-white uppercase tracking-widest text-xs h-11 flex items-center justify-center font-medium shadow-lg transition-colors duration-200">
+                        Select Size
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-center px-1">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-2">
+                      {product.category}
+                    </p>
+                    <h3 className="font-serif text-lg text-foreground mb-1.5 leading-tight">
+                      {product.name}
+                    </h3>
+                    <p className="text-primary font-medium">${product.price.toLocaleString()}</p>
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </AnimatePresence>
