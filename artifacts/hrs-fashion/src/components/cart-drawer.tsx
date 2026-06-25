@@ -1,10 +1,17 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import { useCart } from "@/lib/cart-context";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, totalCount, totalPrice } = useCart();
+  const [, navigate] = useLocation();
+
+  const handleCheckout = () => {
+    closeCart();
+    navigate("/checkout");
+  };
 
   return (
     <AnimatePresence>
@@ -27,7 +34,6 @@ export function CartDrawer() {
             transition={{ type: "spring", damping: 28, stiffness: 260 }}
             className="fixed right-0 top-0 h-full w-full max-w-[420px] bg-background z-50 flex flex-col shadow-2xl"
           >
-            {/* Header */}
             <div className="flex items-center justify-between px-8 py-7 border-b border-border">
               <div className="flex items-center gap-3">
                 <ShoppingBag className="w-5 h-5 text-primary" />
@@ -47,7 +53,6 @@ export function CartDrawer() {
               </button>
             </div>
 
-            {/* Items */}
             <div className="flex-1 overflow-y-auto px-8 py-6">
               {items.length === 0 ? (
                 <motion.div
@@ -85,11 +90,7 @@ export function CartDrawer() {
                         data-testid={`cart-item-${item.id}-${item.selectedSize}`}
                       >
                         <div className="w-24 h-28 shrink-0 overflow-hidden bg-muted">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-cover"
-                          />
+                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                         </div>
                         <div className="flex-1 flex flex-col justify-between">
                           <div>
@@ -97,6 +98,9 @@ export function CartDrawer() {
                             <h4 className="font-serif text-base text-foreground leading-snug">{item.name}</h4>
                             <div className="flex items-center gap-2 mt-1">
                               <p className="text-primary font-medium">${item.price}</p>
+                              {item.originalPrice && (
+                                <p className="text-muted-foreground line-through text-xs">${item.originalPrice}</p>
+                              )}
                               <span className="text-muted-foreground text-xs">·</span>
                               <span className="text-xs text-muted-foreground uppercase tracking-widest">Size {item.selectedSize}</span>
                             </div>
@@ -137,15 +141,15 @@ export function CartDrawer() {
               )}
             </div>
 
-            {/* Footer */}
             {items.length > 0 && (
               <div className="px-8 py-7 border-t border-border bg-secondary/20">
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center mb-1">
                   <span className="text-sm text-muted-foreground uppercase tracking-widest">Subtotal</span>
-                  <span className="font-serif text-xl text-foreground">${totalPrice.toLocaleString()}</span>
+                  <span className="font-serif text-xl text-foreground">${totalPrice.toFixed(2)}</span>
                 </div>
-                <p className="text-xs text-muted-foreground mb-6">Shipping & taxes calculated at checkout</p>
+                <p className="text-xs text-muted-foreground mb-5">Shipping &amp; taxes calculated at checkout</p>
                 <Button
+                  onClick={handleCheckout}
                   className="w-full rounded-none h-14 bg-foreground text-background hover:bg-primary uppercase tracking-widest text-sm transition-colors duration-300"
                   data-testid="button-checkout"
                 >
