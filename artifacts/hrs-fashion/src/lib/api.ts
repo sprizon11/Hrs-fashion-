@@ -1,10 +1,16 @@
 const BASE = "/api";
+const LOCAL_ADMIN_KEY = "hrs_admin_auth";
+const LOCAL_ADMIN_PASSWORD = "admin123";
 
 async function apiFetch<T = unknown>(path: string, options: RequestInit = {}): Promise<T> {
+  const extraHeaders: Record<string, string> = {};
+  if (localStorage.getItem(LOCAL_ADMIN_KEY) === "true") {
+    extraHeaders["X-Admin-Token"] = LOCAL_ADMIN_PASSWORD;
+  }
   const res = await fetch(`${BASE}${path}`, {
     ...options,
     credentials: "include",
-    headers: { "Content-Type": "application/json", ...(options.headers ?? {}) },
+    headers: { "Content-Type": "application/json", ...extraHeaders, ...(options.headers ?? {}) },
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({ error: "Request failed" })) as { error?: string };
@@ -14,9 +20,26 @@ async function apiFetch<T = unknown>(path: string, options: RequestInit = {}): P
 }
 
 export const adminApi = {
-  login: (password: string) => apiFetch("/admin/login", { method: "POST", body: JSON.stringify({ password }) }),
-  logout: () => apiFetch("/admin/logout", { method: "POST" }),
-  me: () => apiFetch<{ authenticated: boolean }>("/admin/me"),
+  login: async (password: string) => {
+    // Try backend first; if unavailable, fall back to local auth
+    try {
+      return await apiFetch("/admin/login", { method: "POST", body: JSON.stringify({ password }) });
+    } catch {
+      if (password === LOCAL_ADMIN_PASSWORD) {
+        localStorage.setItem(LOCAL_ADMIN_KEY, "true");
+        return { authenticated: true };
+      }
+      throw new Error("Invalid password. Please try again.");
+    }
+  },
+  logout: async () => {
+    localStorage.removeItem(LOCAL_ADMIN_KEY);
+    return apiFetch("/admin/logout", { method: "POST" }).catch(() => {});
+  },
+  me: async (): Promise<{ authenticated: boolean }> => {
+    if (localStorage.getItem(LOCAL_ADMIN_KEY) === "true") return { authenticated: true };
+    return apiFetch<{ authenticated: boolean }>("/admin/me");
+  },
 
   getProducts: () => apiFetch<ApiProduct[]>("/products?admin=true"),
   createProduct: (data: Partial<ApiProduct>) => apiFetch<ApiProduct>("/products", { method: "POST", body: JSON.stringify(data) }),

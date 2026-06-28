@@ -153,7 +153,7 @@ export default function Collections() {
                     <h3 className="font-serif text-lg text-foreground mb-1.5 leading-tight">
                       {product.name}
                     </h3>
-                    <p className="text-primary font-medium">${product.price.toLocaleString()}</p>
+                    <p className="text-primary font-medium">₹{product.price.toLocaleString()}</p>
                   </div>
                 </Link>
               </motion.div>

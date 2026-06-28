@@ -144,11 +144,11 @@ export default function Search() {
                         <h3 className="font-serif text-lg text-foreground mb-1.5">{product.name}</h3>
                         {product.originalPrice ? (
                           <div className="flex items-center justify-center gap-2">
-                            <p className="text-primary font-medium">${product.price}</p>
-                            <p className="text-muted-foreground line-through text-sm">${product.originalPrice}</p>
+                            <p className="text-primary font-medium">₹{product.price}</p>
+                            <p className="text-muted-foreground line-through text-sm">₹{product.originalPrice}</p>
                           </div>
                         ) : (
-                          <p className="text-primary font-medium">${product.price}</p>
+                          <p className="text-primary font-medium">₹{product.price}</p>
                         )}
                       </div>
                     </Link>

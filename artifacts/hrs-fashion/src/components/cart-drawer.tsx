@@ -97,9 +97,9 @@ export function CartDrawer() {
                             <p className="text-xs text-muted-foreground uppercase tracking-widest mb-1">{item.category}</p>
                             <h4 className="font-serif text-base text-foreground leading-snug">{item.name}</h4>
                             <div className="flex items-center gap-2 mt-1">
-                              <p className="text-primary font-medium">${item.price}</p>
+                              <p className="text-primary font-medium">₹{item.price}</p>
                               {item.originalPrice && (
-                                <p className="text-muted-foreground line-through text-xs">${item.originalPrice}</p>
+                                <p className="text-muted-foreground line-through text-xs">₹{item.originalPrice}</p>
                               )}
                               <span className="text-muted-foreground text-xs">·</span>
                               <span className="text-xs text-muted-foreground uppercase tracking-widest">Size {item.selectedSize}</span>
@@ -145,7 +145,7 @@ export function CartDrawer() {
               <div className="px-8 py-7 border-t border-border bg-secondary/20">
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-sm text-muted-foreground uppercase tracking-widest">Subtotal</span>
-                  <span className="font-serif text-xl text-foreground">${totalPrice.toFixed(2)}</span>
+                  <span className="font-serif text-xl text-foreground">₹{totalPrice.toFixed(2)}</span>
                 </div>
                 <p className="text-xs text-muted-foreground mb-5">Shipping &amp; taxes calculated at checkout</p>
                 <Button

@@ -201,7 +201,7 @@ export default function Home() {
                   <div className="text-center">
                     <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1.5">{product.category}</p>
                     <h3 className="font-serif text-base text-foreground mb-1">{product.name}</h3>
-                    <p className="text-primary font-medium text-sm">${product.price}</p>
+                    <p className="text-primary font-medium text-sm">₹{product.price}</p>
                   </div>
                 </Link>
               </motion.div>

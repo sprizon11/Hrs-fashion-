@@ -142,7 +142,7 @@ export default function ProductForm() {
             </div>
 
             <div>
-              <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Price (USD) *</label>
+              <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Price (₹) *</label>
               <input type="number" min="0" step="0.01" value={form.price ?? ""} onChange={(e) => set("price", e.target.value)} required className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400 transition-colors" placeholder="350" data-testid="input-product-price" />
             </div>
 

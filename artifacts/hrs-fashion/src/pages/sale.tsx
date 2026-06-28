@@ -139,8 +139,8 @@ export default function Sale() {
                           {product.name}
                         </h3>
                         <div className="flex items-center justify-center gap-3">
-                          <p className="text-primary font-semibold text-lg">${product.price}</p>
-                          <p className="text-muted-foreground line-through text-sm">${product.originalPrice}</p>
+                          <p className="text-primary font-semibold text-lg">₹{product.price}</p>
+                          <p className="text-muted-foreground line-through text-sm">₹{product.originalPrice}</p>
                         </div>
                       </div>
                     </Link>

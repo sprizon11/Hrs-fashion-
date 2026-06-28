@@ -90,12 +90,12 @@ export default function AdminProducts() {
                   </div>
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-slate-800 truncate">{p.name}</p>
-                    <p className="text-xs text-slate-400 truncate md:hidden">{p.category} · ${p.price}</p>
+                    <p className="text-xs text-slate-400 truncate md:hidden">{p.category} · ₹{p.price}</p>
                   </div>
                   <span className="hidden md:block text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full whitespace-nowrap">{p.category}</span>
                   <div className="hidden md:block text-right">
-                    <p className="text-sm font-semibold text-slate-800">${p.price}</p>
-                    {p.originalPrice && <p className="text-xs text-slate-400 line-through">${p.originalPrice}</p>}
+                    <p className="text-sm font-semibold text-slate-800">₹{p.price}</p>
+                    {p.originalPrice && <p className="text-xs text-slate-400 line-through">₹{p.originalPrice}</p>}
                   </div>
                   <p className="hidden md:block text-sm text-slate-600 text-center">{p.stock ?? 0}</p>
                   <div className="flex items-center gap-2">

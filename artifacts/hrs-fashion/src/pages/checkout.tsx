@@ -163,20 +163,20 @@ export default function Checkout() {
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground leading-tight truncate">{item.name}</p>
                       <p className="text-xs text-muted-foreground mt-1">Size: {item.selectedSize} · Qty: {item.quantity}</p>
-                      <p className="text-sm font-semibold text-primary mt-1">${(item.price * item.quantity).toFixed(2)}</p>
+                      <p className="text-sm font-semibold text-primary mt-1">₹{(item.price * item.quantity).toFixed(2)}</p>
                     </div>
                   </div>
                 ))}
               </div>
               <div className="border-t border-border pt-4 space-y-2">
                 <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>Subtotal</span><span>${totalPrice.toFixed(2)}</span>
+                  <span>Subtotal</span><span>₹{totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm text-muted-foreground">
                   <span>Shipping</span><span className="text-emerald-600">Free</span>
                 </div>
                 <div className="flex justify-between font-serif text-lg text-foreground pt-2 border-t border-border">
-                  <span>Total</span><span>${totalPrice.toFixed(2)}</span>
+                  <span>Total</span><span>₹{totalPrice.toFixed(2)}</span>
                 </div>
               </div>
             </div>

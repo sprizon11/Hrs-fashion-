@@ -140,7 +140,7 @@ export default function Product() {
             </motion.h1>
 
             <motion.p variants={fadeUp} className="text-2xl text-primary font-medium mb-8">
-              ${product.price.toLocaleString()}
+              ₹{product.price.toLocaleString()}
             </motion.p>
 
             <motion.p variants={fadeUp} className="text-muted-foreground leading-[1.9] text-base mb-10 border-b border-border pb-10">
@@ -319,7 +319,7 @@ export default function Product() {
                     <div className="text-center">
                       <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">{p.category}</p>
                       <h3 className="font-serif text-base text-foreground mb-1">{p.name}</h3>
-                      <p className="text-primary text-sm">${p.price}</p>
+                      <p className="text-primary text-sm">₹{p.price}</p>
                     </div>
                   </motion.div>
                 </Link>
