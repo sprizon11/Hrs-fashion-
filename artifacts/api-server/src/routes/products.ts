@@ -74,7 +74,7 @@ router.put("/products/:id", requireAdmin, async (req, res) => {
       details: (d["details"] as string[]) ?? [],
       sizes: (d["sizes"] as string[]) ?? [],
       stock: Number(d["stock"]) || 0,
-      updatedAt: new Date(),
+      updatedAt: new Date().toISOString(),
     }).where(eq(productsTable.id, req.params.id)).returning();
     if (!updated) { res.status(404).json({ error: "Not found" }); return; }
     res.json(updated);
@@ -86,7 +86,7 @@ router.put("/products/:id", requireAdmin, async (req, res) => {
 
 router.delete("/products/:id", requireAdmin, async (req, res) => {
   try {
-    await db.update(productsTable).set({ isActive: false, updatedAt: new Date() }).where(eq(productsTable.id, req.params.id));
+    await db.update(productsTable).set({ isActive: false, updatedAt: new Date().toISOString() }).where(eq(productsTable.id, req.params.id));
     res.json({ success: true });
   } catch (err) {
     req.log.error({ err }, "Failed to delete product");

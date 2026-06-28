@@ -112,21 +112,23 @@ export default function Sale() {
                         </button>
 
                         {/* Hover CTA */}
-                        <AnimatePresence>
-                          {hoveredId === product.id && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 12 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: 12 }}
-                              transition={{ duration: 0.2 }}
-                              className="absolute inset-x-0 bottom-0 p-4"
-                            >
-                              <div className="w-full bg-white text-foreground uppercase tracking-widest text-xs h-11 flex items-center justify-center font-medium shadow-lg hover:bg-primary hover:text-white transition-colors duration-200">
-                                Select Size
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                        {product.category !== "Bags" && (
+                          <AnimatePresence>
+                            {hoveredId === product.id && (
+                              <motion.div
+                                initial={{ opacity: 0, y: 12 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 12 }}
+                                transition={{ duration: 0.2 }}
+                                className="absolute inset-x-0 bottom-0 p-4"
+                              >
+                                <div className="w-full bg-white text-foreground uppercase tracking-widest text-xs h-11 flex items-center justify-center font-medium shadow-lg hover:bg-primary hover:text-white transition-colors duration-200">
+                                  Select Size
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        )}
                       </div>
 
                       <div className="text-center px-1">

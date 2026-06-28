@@ -86,7 +86,7 @@ router.patch("/orders/:id", requireAdmin, async (req, res) => {
   try {
     const { status } = req.body as { status: string };
     const [updated] = await db.update(ordersTable)
-      .set({ status, updatedAt: new Date() })
+      .set({ status, updatedAt: new Date().toISOString() })
       .where(eq(ordersTable.id, req.params.id))
       .returning();
     res.json(updated);

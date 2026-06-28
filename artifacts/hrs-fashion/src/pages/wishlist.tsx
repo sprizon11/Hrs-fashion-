@@ -111,11 +111,13 @@ export default function Wishlist() {
                         </button>
 
                         {/* Shop hover */}
-                        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                          <div className="w-full bg-white text-foreground uppercase tracking-widest text-xs h-11 flex items-center justify-center gap-2 font-medium shadow-lg hover:bg-primary hover:text-white transition-colors duration-200">
-                            <ShoppingBag className="w-3.5 h-3.5" /> Select Size
+                        {product.category !== "Bags" && (
+                          <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <div className="w-full bg-white text-foreground uppercase tracking-widest text-xs h-11 flex items-center justify-center gap-2 font-medium shadow-lg hover:bg-primary hover:text-white transition-colors duration-200">
+                              <ShoppingBag className="w-3.5 h-3.5" /> Select Size
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
 
                       <div className="text-center px-1">

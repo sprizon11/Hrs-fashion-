@@ -1,23 +1,23 @@
-import { pgTable, text, doublePrecision, boolean, jsonb, integer, timestamp } from "drizzle-orm/pg-core";
+import { sqliteTable, text, real, integer } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
-export const productsTable = pgTable("products", {
+export const productsTable = sqliteTable("products", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
-  price: doublePrecision("price").notNull(),
-  originalPrice: doublePrecision("original_price"),
+  price: real("price").notNull(),
+  originalPrice: real("original_price"),
   category: text("category").notNull(),
   image: text("image").notNull(),
-  images: jsonb("images").$type<string[]>().default([]),
-  isNew: boolean("is_new").default(false),
-  isActive: boolean("is_active").default(true),
+  images: text("images", { mode: "json" }).$type<string[]>().default([]),
+  isNew: integer("is_new", { mode: "boolean" }).default(false),
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
   description: text("description").notNull(),
-  details: jsonb("details").$type<string[]>().default([]),
-  sizes: jsonb("sizes").$type<string[]>().default([]),
+  details: text("details", { mode: "json" }).$type<string[]>().default([]),
+  sizes: text("sizes", { mode: "json" }).$type<string[]>().default([]),
   stock: integer("stock").default(100),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  createdAt: text("created_at").$defaultFn(() => new Date().toISOString()).notNull(),
+  updatedAt: text("updated_at").$defaultFn(() => new Date().toISOString()).notNull(),
 });
 
 export const insertProductSchema = createInsertSchema(productsTable).omit({

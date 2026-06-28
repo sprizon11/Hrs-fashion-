@@ -14,7 +14,7 @@ router.get("/analytics/summary", requireAdmin, async (req, res) => {
     const startOfMonth = new Date();
     startOfMonth.setDate(1);
     startOfMonth.setHours(0, 0, 0, 0);
-    const [{ sum: monthRevenue }] = await db.select({ sum: sql<number>`coalesce(sum(total),0)` }).from(ordersTable).where(gte(ordersTable.createdAt, startOfMonth));
+    const [{ sum: monthRevenue }] = await db.select({ sum: sql<number>`coalesce(sum(total),0)` }).from(ordersTable).where(gte(ordersTable.createdAt, startOfMonth.toISOString()));
     const [{ count: pendingOrders }] = await db.select({ count: sql<number>`count(*)` }).from(ordersTable).where(eq(ordersTable.status, "pending"));
 
     res.json({
@@ -34,12 +34,12 @@ router.get("/analytics/revenue", requireAdmin, async (req, res) => {
   try {
     const since = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000);
     const rows = await db.select({
-      month: sql<string>`to_char(created_at, 'YYYY-MM')`,
+      month: sql<string>`strftime('%Y-%m', created_at)`,
       revenue: sql<number>`sum(total)`,
       orders: sql<number>`count(*)`,
-    }).from(ordersTable).where(gte(ordersTable.createdAt, since))
-      .groupBy(sql`to_char(created_at, 'YYYY-MM')`)
-      .orderBy(sql`to_char(created_at, 'YYYY-MM')`);
+    }).from(ordersTable).where(gte(ordersTable.createdAt, since.toISOString()))
+      .groupBy(sql`strftime('%Y-%m', created_at)`)
+      .orderBy(sql`strftime('%Y-%m', created_at)`);
 
     res.json(rows.map((r) => ({ month: r.month, revenue: Number(r.revenue), orders: Number(r.orders) })));
   } catch (err) {
