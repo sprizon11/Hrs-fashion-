@@ -170,7 +170,7 @@ export default function Home() {
           </div>
 
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7"
+            className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 sm:gap-7"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}

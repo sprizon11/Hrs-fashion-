@@ -161,8 +161,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <main className="flex-grow">{children}</main>
 
       <footer className="bg-secondary/30 pt-20 pb-10 border-t border-border">
-        <div className="container mx-auto px-8 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          <div className="md:col-span-1">
+        <div className="container mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 md:gap-12 mb-16">
+          <div className="col-span-2 md:col-span-1">
             <h3 className="text-2xl font-serif font-semibold mb-5">HRS Fashion</h3>
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs mb-6">
               Curated elegance for the modern woman. Timeless, feminine style designed to make you feel beautiful and confident.
@@ -198,7 +198,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <li><a href="#" className="hover:text-primary transition-colors">FAQ</a></li>
             </ul>
           </div>
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <h4 className="text-xs font-semibold mb-6 uppercase tracking-widest text-foreground">Newsletter</h4>
             <p className="text-sm text-muted-foreground leading-relaxed mb-5">
               Early access to new collections, exclusive styling tips, and invitations to private events.
@@ -228,6 +228,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex gap-6">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+            <Link href="/admin/login" className="hover:text-primary transition-colors">Admin</Link>
           </div>
         </div>
       </footer>

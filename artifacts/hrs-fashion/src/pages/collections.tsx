@@ -89,7 +89,7 @@ export default function Collections() {
         {/* Product Grid */}
         <motion.div
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7 gap-y-14"
+          className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-10 sm:gap-x-7 sm:gap-y-14"
         >
           <AnimatePresence mode="popLayout">
             {filteredProducts.map((product) => (
