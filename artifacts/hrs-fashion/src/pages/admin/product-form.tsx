@@ -64,8 +64,8 @@ function ImageUploadBox({
   return (
     <div className="space-y-2">
       {value ? (
-        <div className="relative rounded-xl overflow-hidden border border-slate-200 bg-slate-50">
-          <img src={value} alt="Preview" className="w-full max-h-56 object-cover" />
+        <div className="relative inline-block rounded-xl overflow-hidden border border-slate-200 bg-slate-50">
+          <img src={value} alt="Preview" className="h-40 w-auto object-contain block" />
           <button
             type="button"
             onClick={() => onChange("")}
