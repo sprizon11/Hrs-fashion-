@@ -82,21 +82,38 @@ function ImageUploadBox({
           </button>
         </div>
       ) : (
-        <div
-          onClick={() => !uploading && fileRef.current?.click()}
-          className="border-2 border-dashed border-slate-200 rounded-xl p-10 text-center cursor-pointer hover:border-rose-300 hover:bg-rose-50/30 transition-colors"
-        >
-          {uploading ? (
-            <div className="flex flex-col items-center gap-2">
-              <div className="w-8 h-8 border-2 border-rose-400 border-t-transparent rounded-full animate-spin" />
-              <p className="text-sm text-slate-500">Uploading...</p>
-            </div>
-          ) : (
-            <>
-              <Upload className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-              <p className="text-sm text-slate-600 font-medium">Click to upload {placeholder}</p>
-              <p className="text-xs text-slate-400 mt-1">PNG, JPG, WEBP up to 10MB</p>
-            </>
+        <div className="space-y-2">
+          <div
+            onClick={() => !uploading && fileRef.current?.click()}
+            className="border-2 border-dashed border-slate-200 rounded-xl p-10 text-center cursor-pointer hover:border-rose-300 hover:bg-rose-50/30 transition-colors"
+          >
+            {uploading ? (
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-8 h-8 border-2 border-rose-400 border-t-transparent rounded-full animate-spin" />
+                <p className="text-sm text-slate-500">Uploading...</p>
+              </div>
+            ) : (
+              <>
+                <Upload className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                <p className="text-sm text-slate-600 font-medium">Click to upload {placeholder}</p>
+                <p className="text-xs text-slate-400 mt-1">PNG, JPG, WEBP up to 10MB</p>
+              </>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowUrl(!showUrl)}
+            className="text-xs text-slate-400 hover:text-rose-500 transition-colors underline underline-offset-2"
+          >
+            {showUrl ? "Hide URL input" : "Or paste an image URL instead"}
+          </button>
+          {showUrl && (
+            <input
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400 transition-colors"
+              placeholder="https://... or /images/product.jpg"
+            />
           )}
         </div>
       )}
@@ -107,21 +124,6 @@ function ImageUploadBox({
         className="hidden"
         onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ""; }}
       />
-      <button
-        type="button"
-        onClick={() => setShowUrl(!showUrl)}
-        className="text-xs text-slate-400 hover:text-rose-500 transition-colors underline underline-offset-2"
-      >
-        {showUrl ? "Hide URL input" : "Or paste an image URL instead"}
-      </button>
-      {showUrl && (
-        <input
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-rose-400 transition-colors"
-          placeholder="https://... or /images/product.jpg"
-        />
-      )}
     </div>
   );
 }
