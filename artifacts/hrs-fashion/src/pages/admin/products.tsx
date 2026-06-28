@@ -21,7 +21,7 @@ export default function AdminProducts() {
   useEffect(() => { load(); }, []);
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Archive this product? It will be hidden from the store.")) return;
+    if (!window.confirm("Delete this product?")) return;
     setDeleting(id);
     await adminApi.deleteProduct(id).catch(() => {});
     await load();
@@ -39,94 +39,108 @@ export default function AdminProducts() {
   );
 
   if (loading) {
-    return <div className="flex items-center justify-center h-64 text-slate-400 text-sm">Loading products...</div>;
+    return (
+      <div className="flex items-center justify-center h-64 text-slate-400 text-sm">
+        Loading products...
+      </div>
+    );
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+    <div className="p-4 lg:p-8 max-w-7xl mx-auto">
+
+      {/* Header */}
+      <div className="flex items-center justify-between gap-3 mb-6">
         <div>
-          <h2 className="text-2xl font-serif text-slate-800 mb-1">Products</h2>
-          <p className="text-slate-500 text-sm">{products.length} total products</p>
+          <h2 className="text-xl lg:text-2xl font-serif text-slate-800 leading-tight">Products</h2>
+          <p className="text-slate-400 text-xs mt-0.5">{products.length} total products</p>
         </div>
         <button
           onClick={() => navigate("/admin/products/new")}
-          className="flex items-center gap-2 bg-rose-500 hover:bg-rose-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
+          className="flex items-center gap-1.5 bg-rose-500 hover:bg-rose-600 text-white px-4 py-2.5 rounded-xl text-sm font-medium transition-colors whitespace-nowrap"
           data-testid="button-add-product"
         >
-          <Plus className="w-4 h-4" /> Add Product
+          <Plus className="w-4 h-4" />
+          <span className="hidden sm:inline">Add Product</span>
+          <span className="sm:hidden">Add</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-100">
-          <div className="relative max-w-xs">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search products..."
-              className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-rose-400 transition-colors"
-              data-testid="input-search-products"
-            />
-          </div>
-        </div>
+      {/* Search */}
+      <div className="relative mb-4">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search products..."
+          className="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-rose-400 transition-colors shadow-sm"
+          data-testid="input-search-products"
+        />
+      </div>
 
+      {/* Product List */}
+      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         {filtered.length === 0 ? (
-          <div className="py-20 text-center">
+          <div className="py-16 text-center">
             <Package className="w-10 h-10 text-slate-300 mx-auto mb-3" />
             <p className="text-slate-400 text-sm">No products found</p>
           </div>
         ) : (
-          <>
-            <div className="hidden md:grid grid-cols-[auto_1fr_auto_auto_auto_auto] items-center gap-4 px-6 py-3 text-[10px] uppercase tracking-widest text-slate-400 border-b border-slate-50">
-              <span>Image</span><span>Product</span><span>Category</span><span>Price</span><span>Stock</span><span>Actions</span>
-            </div>
-            <div className="divide-y divide-slate-50">
-              {filtered.map((p) => (
-                <div key={p.id} className={`flex flex-col md:grid md:grid-cols-[auto_1fr_auto_auto_auto_auto] md:items-center gap-3 md:gap-4 px-6 py-4 hover:bg-slate-50/50 transition-colors ${!p.isActive ? "opacity-50" : ""}`}>
-                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
-                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium text-slate-800 truncate">{p.name}</p>
-                    <p className="text-xs text-slate-400 truncate md:hidden">{p.category} · ₹{p.price}</p>
-                  </div>
-                  <span className="hidden md:block text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full whitespace-nowrap">{p.category}</span>
-                  <div className="hidden md:block text-right">
-                    <p className="text-sm font-semibold text-slate-800">₹{p.price}</p>
-                    {p.originalPrice && <p className="text-xs text-slate-400 line-through">₹{p.originalPrice}</p>}
-                  </div>
-                  <p className="hidden md:block text-sm text-slate-600 text-center">{p.stock ?? 0}</p>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => handleToggleActive(p)}
-                      className={`p-1.5 rounded-lg transition-colors ${p.isActive ? "text-emerald-500 hover:bg-emerald-50" : "text-slate-400 hover:bg-slate-100"}`}
-                      title={p.isActive ? "Hide from store" : "Show in store"}
-                      data-testid={`button-toggle-${p.id}`}
-                    >
-                      {p.isActive ? <ToggleRight className="w-5 h-5" /> : <ToggleLeft className="w-5 h-5" />}
-                    </button>
-                    <button
-                      onClick={() => navigate(`/admin/products/${p.id}/edit`)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-blue-500 hover:bg-blue-50 transition-colors"
-                      data-testid={`button-edit-${p.id}`}
-                    >
-                      <Pencil className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(p.id)}
-                      disabled={deleting === p.id}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors disabled:opacity-40"
-                      data-testid={`button-delete-${p.id}`}
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
+          <div className="divide-y divide-slate-50">
+            {filtered.map((p) => (
+              <div
+                key={p.id}
+                className={`flex items-center gap-3 px-4 py-3 hover:bg-slate-50/60 transition-colors ${!p.isActive ? "opacity-50" : ""}`}
+              >
+                {/* Image */}
+                <div className="w-14 h-14 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 border border-slate-100">
+                  <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
                 </div>
-              ))}
-            </div>
-          </>
+
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-slate-800 truncate leading-tight">{p.name}</p>
+                  <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                    <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-medium uppercase tracking-wide">
+                      {p.category}
+                    </span>
+                    <span className="text-xs font-semibold text-slate-700">₹{p.price}</span>
+                    {p.originalPrice && (
+                      <span className="text-[11px] text-slate-400 line-through">₹{p.originalPrice}</span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Stock: {p.stock ?? 0}</p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex items-center gap-1 flex-shrink-0">
+                  <button
+                    onClick={() => handleToggleActive(p)}
+                    className={`p-2 rounded-lg transition-colors ${p.isActive ? "text-emerald-500 hover:bg-emerald-50" : "text-slate-300 hover:bg-slate-100"}`}
+                    title={p.isActive ? "Hide from store" : "Show in store"}
+                    data-testid={`button-toggle-${p.id}`}
+                  >
+                    {p.isActive ? <ToggleRight className="w-5 h-5" /> : <ToggleLeft className="w-5 h-5" />}
+                  </button>
+                  <button
+                    onClick={() => navigate(`/admin/products/${p.id}/edit`)}
+                    className="p-2 rounded-lg text-slate-400 hover:text-blue-500 hover:bg-blue-50 transition-colors"
+                    data-testid={`button-edit-${p.id}`}
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(p.id)}
+                    disabled={deleting === p.id}
+                    className="p-2 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors disabled:opacity-40"
+                    data-testid={`button-delete-${p.id}`}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
