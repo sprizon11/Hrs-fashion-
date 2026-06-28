@@ -26,11 +26,11 @@ export default function Collections() {
   return (
     <div className="min-h-screen bg-background">
       {/* Page Header */}
-      <div className="relative pt-40 pb-20 text-center bg-secondary/20 border-b border-border">
+      <div className="relative pt-16 pb-8 md:pt-40 md:pb-20 text-center bg-secondary/20 border-b border-border">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-xs uppercase tracking-[0.25em] text-primary mb-4"
+          className="text-xs uppercase tracking-[0.25em] text-primary mb-2 md:mb-4"
         >
           HRS Fashion
         </motion.p>
@@ -38,7 +38,7 @@ export default function Collections() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="text-5xl md:text-6xl font-serif text-foreground mb-5"
+          className="text-3xl md:text-6xl font-serif text-foreground mb-3 md:mb-5"
         >
           The Collection
         </motion.h1>
@@ -46,16 +46,16 @@ export default function Collections() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-muted-foreground max-w-lg mx-auto text-base leading-relaxed"
+          className="text-muted-foreground max-w-lg mx-auto text-sm md:text-base leading-relaxed px-4"
         >
           Carefully curated dresses designed for every woman and every moment.
         </motion.p>
       </div>
 
-      <div className="container mx-auto px-8 py-16">
+      <div className="container mx-auto px-4 md:px-8 py-8 md:py-16">
         {/* Category Filters */}
         <motion.div
-          className="flex flex-wrap justify-center gap-1 mb-16"
+          className="flex flex-wrap justify-center gap-1 mb-8 md:mb-16"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
